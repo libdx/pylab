@@ -10,10 +10,8 @@ RUN apk update && \
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-COPY ./Pipfile /usr/src/app/Pipfile
-COPY ./Pipfile.lock /usr/src/app/Pipfile.lock
-RUN pip install pipenv
-RUN pipenv install --system
+COPY ./requirements.txt /usr/src/app/requirements.txt
+RUN pip install -r requirements.txt
 
 COPY . /usr/src/app
 
