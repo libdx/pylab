@@ -3,3 +3,4 @@ Dockerfile-prod
 .dockerignore
 .git
 .gitignore
+*.pyc
