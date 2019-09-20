@@ -5,33 +5,39 @@ import json
 import os
 
 
-def csv_to_json(dir_path, filename, output_dir_path=None, labels=[]):
-    """Converts CSV data file to JSON data file
+# TODO: rename to emphasize that func does operate on files
+def csv_to_json(dir_path, filename, output_dir_path, labels=None):
+    """Converts CSV data file to JSON data file.
 
-    dir_path -- path to directory containing CSV file
-    filename -- CSV file name
-    output_dir_path -- output directory where JSON file will be placed
+    :param dir_path: path to directory containing CSV file.
+    :type dir_path: str
+    :param filename: CSV file name.
+    :type filename: str
+    :param output_dir_path: output directory where JSON file will be placed.
+    :type output_dir_path: str
+    :param labels: list of columns names.
+    :type labels: list[str]
     """
-    if output_dir_path is None:
-        return
+
+    labels = labels if labels else []
 
     input_path = os.path.join(dir_path, filename)
 
     with open(input_path) as f:
         reader = csv.DictReader(f, labels)
-        contents = [row for row in reader]
+        contents = list(reader)
 
     if not os.path.exists(output_dir_path):
         os.makedirs(output_dir_path)
 
-    output_filename, _ = os.path.splitext(filename)
-    output_filename += '.json'
+    output_filename = '{}'.format(os.path.splitext(filename)[0]
     output_path = os.path.join(output_dir_path, output_filename)
     with open(output_path, 'w') as f:
         json.dump(contents, f, indent=2)
 
 
 def main():
+    # TODO: move to separate file
     metadata = [
         {
             'filename': 'airports.csv',
@@ -85,10 +91,9 @@ def main():
     for entry in metadata:
         filename = entry['filename']
         labels = entry['labels']
-        csv_to_json(
-            'data', filename, output_dir_path=output_dir_path, labels=labels
-        )
+        csv_to_json('data', filename, output_dir_path, labels=labels)
 
 
 if __name__ == '__main__':
     main()
+
