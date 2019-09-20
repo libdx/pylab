@@ -102,3 +102,11 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# pipenv (allows to be used as user specific tool, not project wide)
+Pipfile
+Pipfile.lock
+
+# private to do file
+TODO
+
