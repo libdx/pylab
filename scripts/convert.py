@@ -2,37 +2,36 @@
 
 import csv
 import json
-import os
+
+from pathlib import Path
 
 
-def csv_file_to_json(dir_path, filename, output_dir_path, labels):
+def csv_file_to_json(file, output_dir, labels=None):
     """Converts CSV data file to JSON data file.
 
-    :param dir_path: path to directory containing CSV file.
-    :type dir_path: str
-    :param filename: CSV file name.
-    :type filename: str
-    :param output_dir_path: output directory where JSON file will be placed.
-    :type output_dir_path: str
+    :param file: path to CSV file.
+    :type file: pathlib.Path
+    :param output_dir: path to output directory where JSON file will be placed.
+    :type output_dir: pathlib.Path
     :param labels: list of columns names.
     :type labels: list[str]
     """
 
-    labels = [] if labels is None else labels
-    output_dir_path = dir_path if output_dir_path is None else output_dir_path
+    if labels is None:
+        labels = []
 
-    input_path = os.path.join(dir_path, filename)
+    if output_dir is None:
+        output_dir = file.parent
 
-    with open(input_path) as f:
+    with open(file) as f:
         reader = csv.DictReader(f, labels)
         contents = list(reader)
 
-    if not os.path.exists(output_dir_path):
-        os.makedirs(output_dir_path)
+    if not output_dir.exists():
+        output_dir.mkdir(parents=True)
 
-    output_filename = '{}.json'.format(os.path.splitext(filename)[0])
-    output_path = os.path.join(output_dir_path, output_filename)
-    with open(output_path, 'w') as f:
+    output_file = output_dir / file.with_suffix('.json').name
+    with open(output_file, 'w') as f:
         json.dump(contents, f, indent=2)
 
 
@@ -40,14 +39,15 @@ def main():
     with open('data/metadata.json') as f:
         metadata = json.load(f)
 
+    data_dir = Path('data')
+    output_dir = Path('data') / 'json'
 
-    output_dir_path = os.path.join('data', 'json')
     for entry in metadata:
         filename = entry['filename']
         labels = entry['labels']
-        csv_file_to_json('data', filename, output_dir_path, labels)
+        csv_file = data_dir / filename
+        csv_file_to_json(csv_file, output_dir, labels)
 
 
 if __name__ == '__main__':
     main()
-
