@@ -5,8 +5,7 @@ import json
 import os
 
 
-# TODO: rename to emphasize that func does operate on files
-def csv_to_json(dir_path, filename, output_dir_path, labels=None):
+def csv_file_to_json(dir_path, filename, output_dir_path, labels):
     """Converts CSV data file to JSON data file.
 
     :param dir_path: path to directory containing CSV file.
@@ -19,7 +18,8 @@ def csv_to_json(dir_path, filename, output_dir_path, labels=None):
     :type labels: list[str]
     """
 
-    labels = labels if labels else []
+    labels = [] if labels is None else labels
+    output_dir_path = dir_path if output_dir_path is None else output_dir_path
 
     input_path = os.path.join(dir_path, filename)
 
@@ -30,68 +30,22 @@ def csv_to_json(dir_path, filename, output_dir_path, labels=None):
     if not os.path.exists(output_dir_path):
         os.makedirs(output_dir_path)
 
-    output_filename = '{}'.format(os.path.splitext(filename)[0]
+    output_filename = '{}.json'.format(os.path.splitext(filename)[0])
     output_path = os.path.join(output_dir_path, output_filename)
     with open(output_path, 'w') as f:
         json.dump(contents, f, indent=2)
 
 
 def main():
-    # TODO: move to separate file
-    metadata = [
-        {
-            'filename': 'airports.csv',
-            'labels': [
-                'id',
-                'name',
-                'city',
-                'country',
-                'iata',
-                'icao',
-                'latitude',
-                'longitude',
-                'altitude',
-                'timezone_offset',
-                'dst',
-                'timezone',
-                'type',
-                'source',
-            ],
-        },
-        {
-            'filename': 'airlines.csv',
-            'labels': [
-                'id',
-                'name',
-                'alias',
-                'iata',
-                'icao',
-                'callsign',
-                'country',
-                'active',
-            ],
-        },
-        {
-            'filename': 'routes.csv',
-            'labels': [
-                'airline',
-                'airline_id',
-                'source_airport',
-                'source_airport_id',
-                'destination_airport',
-                'destination_airport_id',
-                'codeshare',
-                'stops',
-                'equipment',
-            ],
-        },
-    ]
+    with open('data/metadata.json') as f:
+        metadata = json.load(f)
+
 
     output_dir_path = os.path.join('data', 'json')
     for entry in metadata:
         filename = entry['filename']
         labels = entry['labels']
-        csv_to_json('data', filename, output_dir_path, labels=labels)
+        csv_file_to_json('data', filename, output_dir_path, labels)
 
 
 if __name__ == '__main__':

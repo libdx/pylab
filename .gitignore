@@ -103,6 +103,9 @@ venv.bak/
 # mypy
 .mypy_cache/
 
+# vim
+*.swp
+
 # pipenv (allows to be used as user specific tool, not project wide)
 Pipfile
 Pipfile.lock

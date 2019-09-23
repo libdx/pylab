@@ -1,0 +1,48 @@
+[
+  {
+    "filename": "airports.csv",
+    "labels": [
+      "id",
+      "name",
+      "city",
+      "country",
+      "iata",
+      "icao",
+      "latitude",
+      "longitude",
+      "altitude",
+      "timezone_offset",
+      "dst",
+      "timezone",
+      "type",
+      "source"
+    ]
+  },
+  {
+    "filename": "airlines.csv",
+    "labels": [
+      "id",
+      "name",
+      "alias",
+      "iata",
+      "icao",
+      "callsign",
+      "country",
+      "active"
+    ]
+  },
+  {
+    "filename": "routes.csv",
+    "labels": [
+      "airline",
+      "airline_id",
+      "source_airport",
+      "source_airport_id",
+      "destination_airport",
+      "destination_airport_id",
+      "codeshare",
+      "stops",
+      "equipment"
+    ]
+  }
+]
