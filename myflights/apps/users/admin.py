@@ -18,27 +18,17 @@ class UserAdmin(BaseUserAdmin):
     list_filter = ('email', 'is_staff', 'is_active', 'is_superuser')
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        (
-            _('Permissions'),
-            {'fields': ('is_staff', 'is_active', 'is_superuser')},
-        ),
+        (_('Permissions'), {'fields': ('is_staff', 'is_active', 'is_superuser')}),
     )
     add_fieldsets = (
         (
             None,
             {
                 'classes': ('wide',),
-                'fields': (
-                    'email',
-                    'password1',
-                    'password2',
-                    'is_staff',
-                    'is_active',
-                ),
+                'fields': ('email', 'password1', 'password2', 'is_staff', 'is_active'),
             },
         ),
     )
     search_fields = ('email',)
     ordering = ('email',)
     filter_horizontal = ()
-
