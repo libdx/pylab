@@ -18,11 +18,7 @@ class BaseTestCase(TestCase):
         return airline
 
     def _create_airport(
-        self,
-        name='Abc Airport',
-        country='AU',
-        latitude=-28.001744,
-        longitude=153.42844,
+        self, name='Abc Airport', country='AU', latitude=-28.001744, longitude=153.42844
     ):
         airport = Airport.objects.create(
             name=name,
@@ -98,7 +94,9 @@ class RouteTests(BaseTestCase):
         self.assertIn(str(route.destination_airport), str(route))
 
     def test_back_references(self):
-        route = self._create_route(airline_name='Abc Ltd.', origin='A1', destination='A2')
+        route = self._create_route(
+            airline_name='Abc Ltd.', origin='A1', destination='A2'
+        )
 
         origin_airport = Airport.objects.get(name='A1')
         destination_airport = Airport.objects.get(name='A2')
