@@ -3,7 +3,18 @@ from django.utils.translation import ugettext_lazy as _
 from django_countries.fields import CountryField
 
 
-class Airport(models.Model):
+class BaseModel(models.Model):
+    """Base abstract model
+    """
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+
+class Airport(BaseModel):
     """Represents real Airport.
     """
 
@@ -30,10 +41,10 @@ class Airport(models.Model):
     )
 
     def __str__(self):
-        return f'{self.name} {self.country.name}/{self.city_name}'
+        return f'{self.name} ({self.country.name}/{self.city_name})'
 
 
-class Airline(models.Model):
+class Airline(BaseModel):
     """Represents operational and defunct Airline company.
     """
 
@@ -62,31 +73,49 @@ class Airline(models.Model):
         return f'{self.name} {self.callsign}'
 
 
-class Route(models.Model):
+class Route(BaseModel):
     """Represents routes between airports
     """
 
     airline = models.ForeignKey(
-        Airline, related_name='routes', on_delete=models.SET_NULL, null=True, blank=True
+        Airline,
+        related_name='routes',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name=_('Airline that operates the route'),
     )
     origin_airport = models.ForeignKey(
-        Airport, related_name='outgoing_routes', on_delete=models.CASCADE
+        Airport,
+        related_name='outgoing_routes',
+        on_delete=models.CASCADE,
+        verbose_name=_('Origin Airport'),
     )
     destination_airport = models.ForeignKey(
-        Airport, related_name='incoming_routes', on_delete=models.CASCADE
+        Airport,
+        related_name='incoming_routes',
+        on_delete=models.CASCADE,
+        verbose_name=_('Destination Airport'),
     )
     stops = models.IntegerField(_('Number of stops on route'), null=True, blank=True)
-    equipment = models.CharField(_('3-letter codes for plane type'), max_length=100)
+    equipment = models.CharField(
+        _('3-letter codes for plane type'), max_length=100, null=True, blank=True
+    )
 
     def __str__(self):
         return f'{self.origin_airport} - {self.destination_airport}'
 
 
-class Flight(models.Model):
+class Flight(BaseModel):
     """Represents single flight along it's route
     """
 
-    route = models.ForeignKey(Route, related_name='flights', on_delete=models.CASCADE)
+    route = models.ForeignKey(
+        Route,
+        related_name='flights',
+        on_delete=models.CASCADE,
+        verbose_name=_('Route of the flight'),
+    )
     departure_date = models.DateTimeField(_('Departure date time in UTC'))
     arrival_date = models.DateTimeField(_('Arrival date time in UTC'))
 
