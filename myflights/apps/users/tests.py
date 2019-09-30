@@ -7,9 +7,7 @@ class UserManagerTests(TestCase):
     def test_create_user(self):
         User = get_user_model()
 
-        user = User.objects.create_user(
-            email="joe@example.com", password="123"
-        )
+        user = User.objects.create_user(email="joe@example.com", password="123")
 
         self.assertEqual(user.email, "joe@example.com")
         self.assertTrue(user.check_password('123'))
@@ -71,8 +69,5 @@ class UserManagerTests(TestCase):
 
         with self.assertRaises(ValueError):
             User.objects.create_superuser(
-                email='superuser2@example.com',
-                password='123',
-                is_superuser=False,
+                email='superuser2@example.com', password='123', is_superuser=False
             )
-
