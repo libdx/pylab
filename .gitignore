@@ -106,10 +106,6 @@ venv.bak/
 # vim
 *.swp
 
-# pipenv (allows to be used as user specific tool, not project wide)
-Pipfile
-Pipfile.lock
-
 # private to do file
 TODO
 
