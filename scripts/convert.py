@@ -36,16 +36,17 @@ def csv_file_to_json(file, output_dir, labels=None):
 
 
 def main():
-    with open('data/metadata.json') as f:
+    data_dir = Path('data')
+
+    with open(data_dir / 'metadata.json') as f:
         metadata = json.load(f)
 
-    data_dir = Path('data')
     output_dir = Path('data') / 'json'
 
     for entry in metadata:
         filename = entry['filename']
         labels = entry['labels']
-        csv_file = data_dir / filename
+        csv_file = (data_dir / filename).with_suffix('.csv')
         csv_file_to_json(csv_file, output_dir, labels)
 
 
