@@ -8,7 +8,7 @@ from .models import User
 
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
-    """Represents User model in admin site interface
+    """Represents User model in admin site interface.
     """
 
     add_form = UserCreationForm

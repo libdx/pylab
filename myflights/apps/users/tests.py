@@ -8,10 +8,10 @@ class UserManagerTests(TestCase):
         User = get_user_model()
 
         user = User.objects.create_user(
-            email="joe@example.com", password="123"
+            email='joe@example.com', password='123'
         )
 
-        self.assertEqual(user.email, "joe@example.com")
+        self.assertEqual(user.email, 'joe@example.com')
         self.assertTrue(user.check_password('123'))
         self.assertTrue(user.is_active)
         self.assertFalse(user.is_staff)
@@ -36,7 +36,7 @@ class UserManagerTests(TestCase):
     def test_create_user_with_unsusable_password(self):
         User = get_user_model()
 
-        user = User.objects.create_user(email="joe@example", password=None)
+        user = User.objects.create_user(email='joe@example', password=None)
 
         self.assertFalse(user.has_usable_password())
 
