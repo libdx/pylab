@@ -10,7 +10,7 @@ class BaseTestCase(TestCase):
             alias='A',
             iata='xyz',
             icao='defg',
-            callsign="ABC",
+            callsign='ABC',
             country=country,
             is_active=True,
             openflights_id=1,
