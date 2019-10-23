@@ -4,7 +4,7 @@ from django_countries.fields import CountryField
 
 
 class BaseModel(models.Model):
-    """Base abstract model
+    """Base abstract model.
     """
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -74,7 +74,7 @@ class Airline(BaseModel):
 
 
 class Route(BaseModel):
-    """Represents routes between airports
+    """Represents routes between airports.
     """
 
     airline = models.ForeignKey(
@@ -107,7 +107,7 @@ class Route(BaseModel):
 
 
 class Flight(BaseModel):
-    """Represents single flight along it's route
+    """Represents single flight along it's route.
     """
 
     route = models.ForeignKey(
