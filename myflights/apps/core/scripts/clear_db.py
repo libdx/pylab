@@ -1,4 +1,4 @@
-from ..models import Airline, Airport, Route, Flight
+from myflights.apps.core.models import Airline, Airport, Route, Flight
 
 
 def run():

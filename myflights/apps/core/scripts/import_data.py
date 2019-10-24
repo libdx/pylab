@@ -1,10 +1,11 @@
 import sys
 import json 
+import logging
 from django.core.exceptions import ValidationError
 from abc import ABC, abstractproperty
 from pathlib import Path
 
-from ..models import Airline, Airport, Route
+from myflights.apps.core.models import Airline, Airport, Route
 
 
 class BaseImporter(ABC):
@@ -22,13 +23,13 @@ class BaseImporter(ABC):
         self.new_objects = []
 
     def _log(self, msg):
-        """Naive log to strerr using built-in print.
+        """Logs tagged warning messages.
 
         :param msg: message to be logged
         :type msg: str
         """
 
-        print(f'[{self.Model}] {msg}', file=sys.stderr)
+        logging.warning(f'[{self.Model}] {msg}')
 
     @abstractproperty
     def filename(self):
@@ -58,9 +59,9 @@ class BaseImporter(ABC):
                 new_object.clean_fields()
                 self.new_objects.append(new_object)
             except ValidationError:
-                self._log(f"{item} won't be imported due to Validation failure")
+                self._log(f'{item} won\'t be imported due to Validation failure')
             except ValueError as e:
-                self._log(f"{item} won't be imported due to {e}")
+                self._log(f'{item} won\'t be imported due to {e}')
 
         self._log(f'Created {len(self.new_objects)} objects')
 
