@@ -32,7 +32,7 @@ def country_code_by_name(name):
         return None
     elif name == 'United States':
         return 'US'
-    elif name == "Cote d'Ivoire":
+    elif name == 'Cote d\'Ivoire':
         return 'CI'
     else:
         code = countries.by_name(name)
@@ -59,7 +59,7 @@ class DataPurger(ABC):
             self.all_metadata = json.load(f)
 
     def _data_file_with_suffix(self, suffix):
-        """Makes corresponding to metadata path with given suffix
+        """Makes corresponding to metadata path with given suffix.
 
         :param suffix: file's suffix with leading dot (like '.csv', '.json').
         :type suffix: str
