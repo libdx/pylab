@@ -4,3 +4,5 @@ Dockerfile-prod
 .git
 .gitignore
 *.pyc
+TODO
+QA
