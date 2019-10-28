@@ -71,8 +71,5 @@ class UserManagerTests(TestCase):
 
         with self.assertRaises(ValueError):
             User.objects.create_superuser(
-                email='superuser2@example.com',
-                password='123',
-                is_superuser=False,
+                email='superuser2@example.com', password='123', is_superuser=False
             )
-

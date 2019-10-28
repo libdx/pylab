@@ -1,10 +1,10 @@
-[
-  {
+{
+  "airport": {
     "filename": "airports.csv",
     "labels": [
-      "id",
+      "openflights_id",
       "name",
-      "city",
+      "city_name",
       "country",
       "iata",
       "icao",
@@ -18,26 +18,26 @@
       "source"
     ]
   },
-  {
+  "airline": {
     "filename": "airlines.csv",
     "labels": [
-      "id",
+      "openflights_id",
       "name",
       "alias",
       "iata",
       "icao",
       "callsign",
       "country",
-      "active"
+      "is_active"
     ]
   },
-  {
+  "route": {
     "filename": "routes.csv",
     "labels": [
       "airline",
       "airline_id",
-      "source_airport",
-      "source_airport_id",
+      "origin_airport",
+      "origin_airport_id",
       "destination_airport",
       "destination_airport_id",
       "codeshare",
@@ -45,4 +45,4 @@
       "equipment"
     ]
   }
-]
+}
